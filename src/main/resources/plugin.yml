@@ -1,0 +1,6 @@
+name: DestinyControl
+version: ${project.version}
+main: systems.ogd.destinycontrol.Destiny
+api-version: 1.17
+authors: [ Bloeckchengrafik ]
+website: https://ogd.systems/
