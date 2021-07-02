@@ -11,15 +11,22 @@ import java.util.logging.Level;
 @Getter
 public final class Destiny extends JavaPlugin {
 
+    @Getter
+    private static Destiny destiny;
+
     private FileSystem fs;
     private ReservedLogger log;
 
     public void onEnable() {
         // Plugin startup logic
+        destiny = this;
+
         log = new ReservedLogger(getLogger());
         log.getBase().setLevel(Level.FINEST);
 
         initFs();
+        loadUserData();
+        loadKingdomData();
     }
 
     private void initFs(){
@@ -27,6 +34,38 @@ public final class Destiny extends JavaPlugin {
         LogUtils.servLog0("Initializing FS");
         try {
             fs = new FileSystem(this);
+        }catch(Exception exception){
+            LogUtils.servLog1(false);
+            log.release();
+            log.exception(exception);
+            exception.printStackTrace();
+            return;
+        }
+
+        LogUtils.servLog1(true);
+    }
+
+    private void loadUserData(){
+        log.halt();
+        LogUtils.servLog0("Loading User Data");
+        try {
+            fs.loadUserdata();
+        }catch(Exception exception){
+            LogUtils.servLog1(false);
+            log.release();
+            log.exception(exception);
+            exception.printStackTrace();
+            return;
+        }
+
+        LogUtils.servLog1(true);
+    }
+
+    private void loadKingdomData(){
+        log.halt();
+        LogUtils.servLog0("Loading Kingdom Data");
+        try {
+            fs.loadKingdoms();
         }catch(Exception exception){
             LogUtils.servLog1(false);
             log.release();

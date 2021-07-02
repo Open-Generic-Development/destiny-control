@@ -3,18 +3,24 @@ package systems.ogd.destinycontrol.fs;
 import lombok.Getter;
 import systems.ogd.destinycontrol.Destiny;
 import systems.ogd.destinycontrol.fs.exceptions.CriticalFileError;
+import systems.ogd.destinycontrol.kingdoms.Kingdom;
+import systems.ogd.destinycontrol.user.Usermeta;
 
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.List;
 
 @Getter
 public class FileSystem {
     private final File file;
     private final Destiny destinycontrol;
     private final FileReader fileReader;
+
+    private final ArrayList<Kingdom> kingdoms = new ArrayList<>();
+    private final ArrayList<Usermeta> userdata = new ArrayList<>();
 
     public FileSystem(Destiny destinycontrol) throws IOException {
         this.destinycontrol = destinycontrol;
@@ -87,6 +93,43 @@ public class FileSystem {
         } catch (IOException ex) {
             ex.printStackTrace();
             throw new CriticalFileError();
+        }
+
+    }
+
+    public void loadKingdoms() {
+        kingdoms.clear();
+        userdata.clear();
+
+        // Prepare Kingdoms
+        List<Integer> buf1 = fileReader.getBufPart1();
+        List<Integer> dataBuf = new ArrayList<>();
+
+        for(int c : buf1){
+            if(c == 0b10000001){
+                kingdoms.add(new Kingdom(dataBuf));
+                dataBuf.clear();
+            }else{
+                dataBuf.add(c);
+            }
+        }
+
+    }
+
+    public void loadUserdata() {
+        userdata.clear();
+
+        // Prepare Kingdoms
+        List<Integer> buf2 = fileReader.getBufPart2();
+        List<Integer> dataBuf = new ArrayList<>();
+
+        for(int c : buf2){
+            if(c == 0b10000001){
+                userdata.add(new Usermeta(dataBuf));
+                dataBuf.clear();
+            }else{
+                dataBuf.add(c);
+            }
         }
 
     }
