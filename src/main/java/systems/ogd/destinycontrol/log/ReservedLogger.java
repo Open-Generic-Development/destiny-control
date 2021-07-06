@@ -10,14 +10,16 @@ import java.util.logging.Logger;
 public class ReservedLogger {
     @Getter
     private final Logger base;
+    private boolean debug;
 
     @Getter
     private boolean released = true;
 
     private final ArrayList<LogEntry> messages = new ArrayList<>();
 
-    public ReservedLogger(Logger base) {
+    public ReservedLogger(Logger base, boolean debug) {
         this.base = base;
+        this.debug = debug;
     }
 
     public void log(Level level, String msg) {
@@ -43,7 +45,8 @@ public class ReservedLogger {
     }
 
     public void debug(String msg) {
-        log(Level.FINE, msg);
+        if (debug)
+            log(Level.INFO, "[DEBUG] " +  msg);
     }
 
     public void info(String msg) {

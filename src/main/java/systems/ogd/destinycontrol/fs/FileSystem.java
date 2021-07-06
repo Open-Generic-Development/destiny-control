@@ -64,7 +64,6 @@ public class FileSystem {
             throw new CriticalFileError();
         }
 
-        // throw new CriticalFileError();
     }
 
     public void save() {
@@ -99,7 +98,6 @@ public class FileSystem {
 
     public void loadKingdoms() {
         kingdoms.clear();
-        userdata.clear();
 
         // Prepare Kingdoms
         List<Integer> buf1 = fileReader.getBufPart1();

@@ -1,9 +1,12 @@
 package systems.ogd.destinycontrol.fs;
 
 import lombok.Getter;
+import systems.ogd.destinycontrol.kingdoms.Kingdom;
+import systems.ogd.destinycontrol.user.Usermeta;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.UUID;
 
 @Getter
 public class FileReader extends FileBufferUtils {
@@ -32,7 +35,19 @@ public class FileReader extends FileBufferUtils {
     }
 
     private void writeInitial() {
+        Usermeta user = new Usermeta(UUID.randomUUID(), 42);
+
+        ArrayList<Usermeta> users = new ArrayList<>();
+        users.add(user);
+
+        getBufPart2().addAll(user.export());
+        getBufPart1().addAll(new Kingdom("Name", 'A', users, user).export());
+
+        this.buf.addAll(getBufPart1());
+
         this.buf.add(0b10000000);
+
+        this.buf.addAll(getBufPart2());
         this.buf.add(0b10000000);
     }
 }

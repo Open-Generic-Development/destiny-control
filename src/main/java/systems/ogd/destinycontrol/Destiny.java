@@ -21,7 +21,7 @@ public final class Destiny extends JavaPlugin {
         // Plugin startup logic
         destiny = this;
 
-        log = new ReservedLogger(getLogger());
+        log = new ReservedLogger(getLogger(), true); // TODO before merging
         log.getBase().setLevel(Level.FINEST);
 
         initFs();
@@ -42,6 +42,8 @@ public final class Destiny extends JavaPlugin {
             return;
         }
 
+        log.release();
+
         LogUtils.servLog1(true);
     }
 
@@ -58,6 +60,8 @@ public final class Destiny extends JavaPlugin {
             return;
         }
 
+        log.release();
+
         LogUtils.servLog1(true);
     }
 
@@ -73,6 +77,8 @@ public final class Destiny extends JavaPlugin {
             exception.printStackTrace();
             return;
         }
+
+        log.release();
 
         LogUtils.servLog1(true);
     }
