@@ -25,27 +25,36 @@ public class FileSystem {
     public FileSystem(Destiny destinycontrol) throws IOException {
         this.destinycontrol = destinycontrol;
 
+        Destiny.getDestiny().getLog().debug("Creating File Structure");
+
         File dataFolder = this.destinycontrol.getDataFolder();
 
         if (dataFolder.mkdirs()) {
             this.destinycontrol.getLog().info("Created new Data Folder");
-        }
+        }else
+            Destiny.getDestiny().getLog().debug(" » Data Folder exists");
 
         file = new File(dataFolder, "data.bin");
 
         if (!file.exists()) {
             if (!file.createNewFile()) {
                 this.destinycontrol.getLog().exception(new CriticalFileError("Cannot create Binary file"));
-            }
-        }
+            }else
+                Destiny.getDestiny().getLog().debug(" » New file created");
+        }else
+            Destiny.getDestiny().getLog().debug(" » Binary File exists");
 
 
         try {
+            Destiny.getDestiny().getLog().debug(" » Writing initial Data");
+
             // create a reader
             FileInputStream fis = new FileInputStream(this.file);
 
             // read one byte at a time
             int read;
+
+            Destiny.getDestiny().getLog().debug(" » Creating and Reading into Buffer");
 
             ArrayList<Integer> bytes = new ArrayList<>();
 
@@ -53,8 +62,12 @@ public class FileSystem {
                 bytes.add(read);
             }
 
+            Destiny.getDestiny().getLog().debug(" » Close File Handle");
+
             // close the reader
             fis.close();
+
+            Destiny.getDestiny().getLog().debug(" » Analyze Buffer");
 
             fileReader = new FileReader(bytes, this);
             fileReader.start();
@@ -73,6 +86,8 @@ public class FileSystem {
 
             fileReader.getBufPart1().add(0b00001111);
 
+            Destiny.getDestiny().getLog().debug(" » Writing Data to File");
+
             // write data to file
             for (int c : fileReader.getBufPart1()) {
                 fos.write(c);
@@ -85,6 +100,8 @@ public class FileSystem {
             }
 
             fos.write(0b10000000);
+
+            Destiny.getDestiny().getLog().debug(" » Close the stream");
 
             // close the writer
             fos.close();

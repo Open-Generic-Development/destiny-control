@@ -46,7 +46,7 @@ public class ReservedLogger {
 
     public void debug(String msg) {
         if (debug)
-            log(Level.INFO, "[DEBUG] " +  msg);
+            log(Level.INFO, "[" + LogUtils.ANSI_BLUE + "DEBUG" + LogUtils.ANSI_RESET  + "] " +  msg);
     }
 
     public void info(String msg) {

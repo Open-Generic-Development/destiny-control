@@ -1,6 +1,7 @@
 package systems.ogd.destinycontrol.fs;
 
 import lombok.Getter;
+import systems.ogd.destinycontrol.Destiny;
 import systems.ogd.destinycontrol.kingdoms.Kingdom;
 import systems.ogd.destinycontrol.user.Usermeta;
 
@@ -23,10 +24,17 @@ public class FileReader extends FileBufferUtils {
 
     public void start(){
         if(!isValid(buf)){
+            Destiny.getDestiny().getLog().debug(" » Buffer Invalid");
+
             writeInitial();
 
+            Destiny.getDestiny().getLog().debug(" » Saving");
+
             fileSystem.save();
-        }
+        }else
+            Destiny.getDestiny().getLog().debug(" » Buffer Valid");
+
+        Destiny.getDestiny().getLog().debug(" » Analyzing Data");
 
         List<List<Integer>> sectors = readSectors(buf);
 
@@ -35,10 +43,14 @@ public class FileReader extends FileBufferUtils {
     }
 
     private void writeInitial() {
+        Destiny.getDestiny().getLog().debug(" » Generating example data");
+
         Usermeta user = new Usermeta(UUID.randomUUID(), 42);
 
         ArrayList<Usermeta> users = new ArrayList<>();
         users.add(user);
+
+        Destiny.getDestiny().getLog().debug(" » Writing Data to Cache");
 
         getBufPart2().addAll(user.export());
         getBufPart1().addAll(new Kingdom("Name", 'A', users, user).export());
