@@ -25,3 +25,5 @@ commands:
       - ver
       - version
       - icanhasbukkit
+      - pl
+      - plugins
