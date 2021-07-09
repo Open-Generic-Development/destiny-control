@@ -10,7 +10,9 @@ import java.util.logging.Logger;
 public class ReservedLogger {
     @Getter
     private final Logger base;
-    private boolean debug;
+
+    @Getter
+    private final boolean debug;
 
     @Getter
     private boolean released = true;

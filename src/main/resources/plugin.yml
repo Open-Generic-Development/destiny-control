@@ -4,3 +4,25 @@ main: systems.ogd.destinycontrol.Destiny
 api-version: 1.17
 authors: [ Bloeckchengrafik ]
 website: https://ogd.systems/
+
+commands:
+  destiny:
+    aliases:
+      - ds
+      - dd
+      - destinycontrol
+      - ctrl
+      - dty
+      - dt
+      - dtcy
+      - dtn
+      - dctrl
+      - d
+      - s
+      - c
+      - i
+      - help
+      - ?
+      - ver
+      - version
+      - icanhasbukkit
