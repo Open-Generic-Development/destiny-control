@@ -22,7 +22,6 @@ commands:
       - c
       - i
       - help
-      - ?
       - ver
       - version
       - icanhasbukkit
