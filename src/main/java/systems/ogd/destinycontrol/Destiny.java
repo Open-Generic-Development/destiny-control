@@ -1,11 +1,13 @@
 package systems.ogd.destinycontrol;
 
+import com.samjakob.spigui.SpiGUI;
 import lombok.Getter;
 import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
 import systems.ogd.destinycontrol.command.DestinyCommand;
 import systems.ogd.destinycontrol.fs.FileSystem;
+import systems.ogd.destinycontrol.listeners.UserActionListener;
 import systems.ogd.destinycontrol.log.LogUtils;
 import systems.ogd.destinycontrol.log.ReservedLogger;
 
@@ -15,12 +17,12 @@ import java.util.logging.Level;
 
 @Getter
 public final class Destiny extends JavaPlugin {
-
     @Getter
     private static Destiny destiny;
 
     private FileSystem fs;
     private ReservedLogger log;
+    private SpiGUI uiManager;
 
     public void onEnable() {
         // Plugin startup logic
@@ -34,7 +36,9 @@ public final class Destiny extends JavaPlugin {
         initFs();
         loadUserData();
         loadKingdomData();
+        initUiManager();
 
+        Bukkit.getPluginManager().registerEvents(new UserActionListener(), this);
 
         Objects.requireNonNull(getCommand("destiny")).setExecutor(new DestinyCommand());
     }
@@ -125,6 +129,24 @@ public final class Destiny extends JavaPlugin {
         LogUtils.servLog0("Loading Kingdom Data");
         try {
             fs.loadKingdoms();
+        }catch(Exception exception){
+            LogUtils.servLog1(false);
+            log.release();
+            log.exception(exception);
+            exception.printStackTrace();
+            return;
+        }
+
+        log.release();
+
+        LogUtils.servLog1(true);
+    }
+
+    private void initUiManager(){
+        log.halt();
+        LogUtils.servLog0("Initialize UI Manager");
+        try {
+            uiManager = new SpiGUI(this);
         }catch(Exception exception){
             LogUtils.servLog1(false);
             log.release();

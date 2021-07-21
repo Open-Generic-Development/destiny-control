@@ -5,33 +5,19 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandExecutor;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import systems.ogd.destinycontrol.Destiny;
+import systems.ogd.destinycontrol.UserInterface;
 import systems.ogd.destinycontrol.user.Usermeta;
 import systems.ogd.destinycontrol.utils.MessageUtils;
 
 import java.util.Locale;
-import java.util.Optional;
+import java.util.Objects;
+
+import static systems.ogd.destinycontrol.utils.PlayerUtils.resolvePlayer;
 
 public class DestinyCommand implements CommandExecutor {
     @Override
     public boolean onCommand(CommandSender sender, Command command, String label, String[] args) {
         return executeCommand(resolvePlayer((Player) sender), label.toLowerCase(Locale.ROOT), args);
-    }
-
-    private Usermeta resolvePlayer(Player sender) {
-        Destiny.getDestiny().getLog().debug(" » Resolving User " + sender.getDisplayName());
-
-        Optional<Usermeta> optionalUsermeta = Destiny.getDestiny().getFs().getUserdata().stream().filter(
-                usermeta1 -> usermeta1.getUuid().toString().equals(sender.getUniqueId().toString())).findFirst();
-
-        if (!optionalUsermeta.isPresent()) {
-            Destiny.getDestiny().getLog().debug(" » User not present in config!");
-            return null;
-        }
-
-        Destiny.getDestiny().getLog().debug(" » User present in config.");
-
-        return optionalUsermeta.get();
     }
 
     private boolean executeCommand(Usermeta sender, String label, String[] args) {
@@ -40,7 +26,10 @@ public class DestinyCommand implements CommandExecutor {
             return true;
         }
 
-        return false;
+        Player player = Bukkit.getPlayer(sender.getUuid());
+        new UserInterface(Objects.requireNonNull(player), sender);
+
+        return true;
     }
 
     private void sendHelpMessage(Usermeta sender) {

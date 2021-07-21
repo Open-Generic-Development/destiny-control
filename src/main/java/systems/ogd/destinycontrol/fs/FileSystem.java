@@ -146,6 +146,15 @@ public class FileSystem {
                 dataBuf.add(c);
             }
         }
+    }
 
+    public void exportLiveData() {
+        for (Usermeta user : userdata) {
+            fileReader.getBufPart2().addAll(user.export());
+        }
+
+        for (Kingdom kingdom : kingdoms) {
+            fileReader.getBufPart1().addAll(kingdom.export());
+        }
     }
 }
