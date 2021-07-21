@@ -2,6 +2,7 @@ package systems.ogd.destinycontrol.user;
 
 import lombok.Getter;
 import lombok.Setter;
+import systems.ogd.destinycontrol.kingdoms.KingdomInvitation;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,6 +14,7 @@ public class Usermeta {
 
     private UUID uuid;
     private int permissions;
+    private KingdomInvitation invitation = null;
 
     public Usermeta(List<Integer> dataBuf) {
         int ri = 0;

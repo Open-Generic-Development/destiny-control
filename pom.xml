@@ -66,6 +66,10 @@
             <id>jitpack.io</id>
             <url>https://jitpack.io</url>
         </repository>
+        <repository>
+            <id>codemc-snapshots</id>
+            <url>https://repo.codemc.io/repository/maven-snapshots/</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -89,6 +93,11 @@
             <groupId>com.samjakob</groupId>
             <artifactId>SpiGUI</artifactId>
             <version>v1.2.2</version>
+        </dependency>
+        <dependency>
+            <groupId>net.wesjd</groupId>
+            <artifactId>anvilgui</artifactId>
+            <version>1.5.1-SNAPSHOT</version>
         </dependency>
     </dependencies>
 </project>

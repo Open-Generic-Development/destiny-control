@@ -6,6 +6,7 @@ import org.bukkit.Bukkit;
 import org.bukkit.plugin.java.JavaPlugin;
 import org.bukkit.scoreboard.Team;
 import systems.ogd.destinycontrol.command.DestinyCommand;
+import systems.ogd.destinycontrol.crafts.CustomCrafts;
 import systems.ogd.destinycontrol.fs.FileSystem;
 import systems.ogd.destinycontrol.listeners.UserActionListener;
 import systems.ogd.destinycontrol.log.LogUtils;
@@ -37,6 +38,8 @@ public final class Destiny extends JavaPlugin {
         loadUserData();
         loadKingdomData();
         initUiManager();
+
+        CustomCrafts.registerCrafts();
 
         Bukkit.getPluginManager().registerEvents(new UserActionListener(), this);
 
@@ -160,3 +163,44 @@ public final class Destiny extends JavaPlugin {
         LogUtils.servLog1(true);
     }
 }
+
+/*
+ * Prefixe
+ *  - A | Admin
+ *  - M | Mod
+ *  - P | Player
+ *
+ * Permissions
+ *
+ *  2 = Admin
+ *  1 = Moderator
+ *  0 = Player
+ *
+ * /c:
+ *  P1:
+ *      Kingdoms
+ *          new
+ *          accept
+ *          alter
+ *          invite
+ *          leave
+ *      AFK
+ *  P2:
+ *      Clear Chat
+ *      Kick Player
+ *      Ban Player
+ *      Warn Player
+ *      Teamchat
+ *      Warn Kingdom
+ *  P3:
+ *      Promote Member
+ *      Demote Member
+ *      Grant Admin Privileges
+ *      Remove Admin Privileges
+ *      Alter Kingdom
+ *      Remove Kingdom
+ *
+ * Custom Craft: Quarz Wayback
+ *
+ */
+

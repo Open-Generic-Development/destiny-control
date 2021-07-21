@@ -51,15 +51,3 @@ public class FileReader extends FileBufferUtils {
         this.buf.add(0b10000000);
     }
 }
-
-/*
- * Prefixe
- * Permissions
- * /kingdom [new,accept,alter,invite,leave]
- * Custom Craft: Quarz Wayback
- *
- * 0 0 0 0 0 0 0 0
- *
- * Control -> 0: Normal, 1: Skip
- *
- */
